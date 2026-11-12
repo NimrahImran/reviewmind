@@ -18,6 +18,55 @@
   ],
   "paths": {
     "/api/analyze": {
+      "get": {
+        "summary": "Check that the fine-tuned model is live",
+        "description": "With ?check=model, loads the Pulse model and runs it on two fixed sentences. Limit: 6 requests per minute per IP.",
+        "parameters": [
+          {
+            "name": "check",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "model"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model answered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "model": {
+                      "type": "string"
+                    },
+                    "ms": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Model unavailable; the site falls back to the other engines"
+          }
+        }
+      },
       "post": {
         "summary": "Analyze up to ten reviews",
         "description": "Runs every review through all seven agents. Up to 10 reviews, 3–600 characters each. Identical requests are cached for 10 minutes. Limit: 12 requests per minute per IP.",

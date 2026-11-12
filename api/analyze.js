@@ -6,6 +6,7 @@
 
 import { allowRequest, cached, clientIp, isSameOrigin, json, log, newRequestId } from './_lib/http.js';
 import { analyze, validateInput } from './_lib/pipeline.js';
+import { localSentiment } from './_lib/pulse-model.js';
 
 /** @param {Request} request */
 export async function POST(request) {
@@ -44,6 +45,22 @@ export async function POST(request) {
   }
 }
 
-export function GET() {
-  return json({ ok: false, error: 'Use POST with a JSON body. See /openapi.json.' }, 405);
+// GET /api/analyze?check=model — loads the Pulse model (also warms it up) and runs it on
+// two fixed sentences, so anyone can confirm the fine-tuned model is live.
+const CHECK = ['Bakwas service, khana thanda tha aur staff ne baat bhi nahi suni', 'Biryani was fresh and tasty, staff was very friendly'];
+
+/** @param {Request} request */
+export async function GET(request) {
+  const requestId = newRequestId();
+  if (new URL(request.url).searchParams.get('check') !== 'model') {
+    return json({ ok: false, error: 'Use POST with a JSON body. See /openapi.json.' }, 405, requestId);
+  }
+  const limit = allowRequest(`check:${clientIp(request)}`, 6, 60_000);
+  if (!limit.ok) return json({ ok: false, error: `Too many requests. Please wait ${limit.retryAfter} seconds.` }, 429, requestId);
+  const t0 = Date.now();
+  const out = await localSentiment(CHECK);
+  const ms = Date.now() - t0;
+  log('info', { requestId, event: 'model_check', ok: Boolean(out), ms });
+  if (!out) return json({ ok: false, model: 'unavailable', ms }, 503, requestId);
+  return json({ ok: true, model: 'ReviewMind Pulse (fine-tuned XLM-RoBERTa, int8 ONNX)', ms, results: CHECK.map((text, i) => ({ text, ...out[i] })) }, 200, requestId);
 }
