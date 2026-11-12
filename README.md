@@ -124,12 +124,18 @@ Review training lifted accuracy on unseen reviews from 58.3% to 81.7%. The publi
 ## Project structure
 
 ```
-api/            Vercel functions (analyze, contact, health) and shared lib
-  _lib/         pipeline, Gemini client, Pulse model runner, basic engine, HTTP helpers
-src/            React app: pages, components, agent data, styles
-public/         robot images, favicon, openapi.json
-model/          runtime/ (the shipped model), training/ (code), sample data, guide
-tests/          Vitest tests
+reviewmind/
+├── api/                  Vercel functions: analyze, contact, health
+│   └── _lib/             pipeline, Gemini client, Pulse model runner, basic engine, HTTP helpers
+├── src/                  React app: pages, components, agent data, styles
+├── public/               robot images, favicon, share card, openapi.json
+├── model/
+│   ├── runtime/          the shipped model (int8 ONNX parts, vocab, model card)
+│   ├── training/         training, review tuning and export code
+│   └── data/             sample reviews
+├── docs/screenshots/     images used in this README
+├── scripts/              OpenAPI spec builder
+└── tests/                Vitest tests
 ```
 
 ## License
