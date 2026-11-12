@@ -1,0 +1,24 @@
+# Secrets — never commit real keys
+.env
+.env.local
+.env.*.local
+
+# Dependencies and builds
+node_modules/
+dist/
+.vercel/
+
+# Model training outputs (only model/runtime/ is committed)
+model/output/
+model/out/
+model/out2/
+model/base/
+model/*.bin
+model/*.safetensors
+model/*.parquet
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
