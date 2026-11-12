@@ -1,10 +1,36 @@
+<div align="center">
+
 # ReviewMind
 
 **Seven AI agents that read customer reviews in Roman Urdu and English.**
 
+[**Live site →**](https://reviewmindai.vercel.app) &nbsp;·&nbsp; [Live demo](https://reviewmindai.vercel.app/demo) &nbsp;·&nbsp; [API spec](https://reviewmindai.vercel.app/openapi.json)
+
+![ReviewMind hero: the Pulse agent reading a review](docs/screenshots/hero.jpg)
+
+![React](https://img.shields.io/badge/React-18-1f0a10?logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-6-1f0a10?logo=vite) ![XLM-RoBERTa](https://img.shields.io/badge/XLM--RoBERTa-fine--tuned-8e2338) ![ONNX](https://img.shields.io/badge/ONNX-int8-1f0a10?logo=onnx) ![Gemini](https://img.shields.io/badge/Gemini-JSON_mode-1f0a10?logo=googlegemini) ![Vercel](https://img.shields.io/badge/Vercel-serverless-1f0a10?logo=vercel) ![License](https://img.shields.io/badge/license-MIT-e7c27a)
+
+</div>
+
 ReviewMind turns messy reviews from Google, Daraz, Foodpanda and Instagram into clear answers: how the customer feels, what they are talking about, whether they are being sarcastic, whether the review is fake, a reply ready to send, and one report that says what to fix first.
 
+The sentiment agent runs **our own fine-tuned XLM-RoBERTa model**: **81.7% accuracy** on 60 real-style reviews it never saw, running inside the API with no outside model service.
+
 Built by **Nimra Imran**, AI Engineer.
+
+## Screenshots
+
+| The whole team | On a phone |
+|---|---|
+| ![Seven agents together](docs/screenshots/team.jpg) | <img src="docs/screenshots/hero-phone.jpg" alt="ReviewMind on a phone" width="260"> |
+
+**Live demo:** sarcasm caught, topics split, reply drafted, report written
+
+![Live demo results](docs/screenshots/demo.jpg)
+
+| Meet the agents | For developers panel |
+|---|---|
+| ![Agents page](docs/screenshots/agents.jpg) | ![Developers panel with model metrics](docs/screenshots/developers.jpg) |
 
 ---
 
