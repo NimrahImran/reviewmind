@@ -1,0 +1,48 @@
+{
+  "name": "ReviewMind Pulse sentiment model",
+  "base_model": "FacebookAI/xlm-roberta-base",
+  "task": "3-way sentiment (negative, neutral, positive)",
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "languages": [
+    "Roman Urdu",
+    "English",
+    "Urdu"
+  ],
+  "train_size": 16663,
+  "test_size": 2931,
+  "dataset": "community-datasets/roman_urdu (UCI Roman Urdu Data Set) + 30 ReviewMind samples",
+  "vocabulary": "47204 of 250,002 XLM-R pieces kept",
+  "review_test_size": 60,
+  "training_stages": [
+    "public Roman Urdu sentences (16,663)",
+    "ReviewMind hand-written reviews (154) mixed with 3,000 public"
+  ],
+  "domain_tuning": {
+    "before": {
+      "public_acc": 0.6332,
+      "public_f1": 0.6215,
+      "review_acc": 0.5833,
+      "review_f1": 0.5583
+    },
+    "after": {
+      "public_acc": 0.6288,
+      "public_f1": 0.6235,
+      "review_acc": 0.8167,
+      "review_f1": 0.8119
+    },
+    "review_train": 154,
+    "review_test": 60
+  },
+  "test_metrics_int8_onnx": {
+    "accuracy": 0.6257,
+    "f1_macro": 0.6186,
+    "review_accuracy": 0.8167,
+    "review_f1_macro": 0.8119,
+    "seconds": 30.2
+  },
+  "format": "ONNX, dynamic int8 quantization (per-channel)"
+}
